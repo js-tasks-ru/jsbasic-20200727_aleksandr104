@@ -6,7 +6,8 @@
  */
 function sum(m, n) {
   let amount;
+  
   amount = m + n;
-  alert(amount);
+  
   return amount; 
 }
