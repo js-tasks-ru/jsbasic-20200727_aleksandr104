@@ -5,13 +5,8 @@
  * @returns {number[]}
  */
 function filterRange(arr, a, b) {
-  let result = [];
-
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] >= a && arr[i] <= b) {
-      result.push(arr[i]);
-    }
-  }
+  let result = arr.filter(value => 
+    (value >= a && value <= b));
 
   return result;
 }

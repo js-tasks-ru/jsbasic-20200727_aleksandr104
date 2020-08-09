@@ -4,7 +4,7 @@
  * @returns {{min:number, max:number}}  объект
  */
 function getMinMax(str) {
-  let arr = str.split(", ").join("|").split(" ").join("|").split("|");
+  let arr = str.split(",").join("|").split(" ").join("|").split("|");
   let result = {
     min: 0,
     max: 0

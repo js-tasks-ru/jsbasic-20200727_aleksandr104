@@ -5,9 +5,9 @@
  * @returns {number}
  */
 function sum(m, n) {
-  //let amount;
+  let amount;
   
-  //amount = m + n;
+  amount = m + n;
   
-  //return amount; 
+  return amount; 
 }
