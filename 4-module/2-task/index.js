@@ -8,6 +8,6 @@ function makeDiagonalRed(table) {
     for (let i = 0; i < lengthTable; i++) {
         table.rows[i].cells[i].style.backgroundColor = 'red';
     };
-
+    
     return table;
 }
