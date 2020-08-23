@@ -6,7 +6,7 @@ function initCarousel() {
   let carouselLength = carousel.children.length;
 
   let buttons = document.querySelectorAll('.carousel__arrow');
-  for (button of buttons) {
+  for (let button of buttons) {
     button.addEventListener('click', function() {
       let slide = document.querySelector('.carousel__slide');
       let slideOffset = slide.offsetWidth;
@@ -29,7 +29,7 @@ function initCarousel() {
 function displayArrow(countCarousel, carouselLength) {
   let buttons = document.querySelectorAll('.carousel__arrow');
 
-  for (button of buttons) {
+  for (let button of buttons) {
     let classButton = button.classList[1];
     button.style.display = '';
 
