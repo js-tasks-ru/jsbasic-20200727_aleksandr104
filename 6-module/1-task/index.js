@@ -29,7 +29,11 @@
  * @constructor
  */
 export default class UserTable {
-  constructor(rows) {
+  constructor(rows) { 
+    this.elem = this.render(rows); 
+  }
+
+  render(rows) {
     let table = document.createElement('table');
     let tbody = document.createElement('tbody');
     
@@ -53,7 +57,7 @@ export default class UserTable {
     }
     table.append(tbody);
     
-    this.elem = table; 
+    return table;
   }
 
   onclick(event) {

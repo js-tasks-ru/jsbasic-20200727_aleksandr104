@@ -4,6 +4,12 @@ export default class Carousel {
   constructor(slides) {
     this.slides = slides;
 
+    this.elem = this.render(slides);
+
+    initCarousel(this.elem);
+  }
+
+  render(slides) {
     let divCarousel = document.createElement('div');
     divCarousel.classList.add('carousel');
 
@@ -64,17 +70,15 @@ export default class Carousel {
 
       divCarouselSlide.append(divCarouselСaption);
       divCarouselInner.append(divCarouselSlide);
-      
+
       let eventProductAdd = new CustomEvent("product-add", {
         detail: slide.id,
         bubbles: true
       });
     }
     divCarousel.append(divCarouselInner);
-    
-    this.elem = divCarousel;
-    
-    initCarousel(this.elem);
+
+    return divCarousel;
   }
 }
 
@@ -87,7 +91,7 @@ function initCarousel(document) {
 
   let buttons = document.querySelectorAll('.carousel__arrow');
   for (let button of buttons) {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
       let slide = document.querySelector('.carousel__slide');
       let slideOffset = slide.offsetWidth;
       let classButton = this.classList[1];

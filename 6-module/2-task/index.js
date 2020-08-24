@@ -2,51 +2,53 @@ import createElement from '../../assets/lib/create-element.js';
 
 export default class ProductCard {
   constructor(product) {
-   let divCard = document.createElement('div');
-   divCard.classList.add('card');
-   divCard.setAttribute('data-id', product.id);
- 
-   let divCardTop = document.createElement('div');
+    this.elem = this.render(product);
+  }
+  
+  render(product) {
+    let divCard = document.createElement('div');
+    divCard.classList.add('card');
+    divCard.setAttribute('data-id', product.id);
 
-   let img = document.createElement('img'); 
-   let imgSource = `/assets/images/products/${product.image}`;
-   img.classList.add('card__image');
-   img.setAttribute('src', imgSource);
-   img.setAttribute('alt', 'product');
-   divCardTop.append(img); 
+    let divCardTop = document.createElement('div');
 
-   let span = document.createElement('span');
-   span.classList.add('card__price'); 
-   span.innerText = "€"+product.price.toFixed(2);   
-   divCardTop.append(span); 
+    let img = document.createElement('img');
+    let imgSource = `/assets/images/products/${product.image}`;
+    img.classList.add('card__image');
+    img.setAttribute('src', imgSource);
+    img.setAttribute('alt', 'product');
+    divCardTop.append(img);
 
-   divCard.append(divCardTop);
+    let span = document.createElement('span');
+    span.classList.add('card__price');
+    span.innerText = "€" + product.price.toFixed(2);
+    divCardTop.append(span);
 
-   let divCardBody = document.createElement('div');
-   divCardBody.classList.add('card__body');
+    divCard.append(divCardTop);
 
-   let divCardTitle = document.createElement('div');
-   divCardTitle.classList.add('card__title');
-   divCardTitle.innerText = product.name;
+    let divCardBody = document.createElement('div');
+    divCardBody.classList.add('card__body');
 
-   divCardBody.append(divCardTitle);
+    let divCardTitle = document.createElement('div');
+    divCardTitle.classList.add('card__title');
+    divCardTitle.innerText = product.name;
 
-   let button = document.createElement('button');
-   button.type = 'button';
-   button.classList.add('card__button');
-   button.innerHTML = '<img src="/assets/images/icons/plus-icon.svg" alt="icon">';
-   button.addEventListener('click', (event) => 
-   divCard.dispatchEvent(eventProductAdd));
-   divCardBody.append(button);
+    divCardBody.append(divCardTitle);
 
-   divCard.append(divCardBody);
+    let button = document.createElement('button');
+    button.type = 'button';
+    button.classList.add('card__button');
+    button.innerHTML = '<img src="/assets/images/icons/plus-icon.svg" alt="icon">';
+    button.addEventListener('click', (event) =>
+      divCard.dispatchEvent(eventProductAdd));
+    divCardBody.append(button);
 
-   let eventProductAdd = new CustomEvent("product-add", {
-    detail: product.id, 
-    bubbles: true 
-   });
+    divCard.append(divCardBody);
 
-   this.elem = divCard;
-
+    let eventProductAdd = new CustomEvent("product-add", {
+      detail: product.id,
+      bubbles: true
+    });
+    return divCard;
   }
 }
