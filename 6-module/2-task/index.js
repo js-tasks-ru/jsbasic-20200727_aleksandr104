@@ -6,39 +6,30 @@ export default class ProductCard {
   }
   
   render(product) {
-    let divCard = document.createElement('div');
-    divCard.classList.add('card');
-    divCard.setAttribute('data-id', product.id);
+    let divCard = createElement('<div class="card"></div>'); 
 
-    let divCardTop = document.createElement('div');
+    let divCardTop = createElement('<div></div>');
 
-    let img = document.createElement('img');
-    let imgSource = `/assets/images/products/${product.image}`;
-    img.classList.add('card__image');
-    img.setAttribute('src', imgSource);
-    img.setAttribute('alt', 'product');
+    let innerHtml = `<img src="/assets/images/products/${product.image}"`;
+    innerHtml += 'class="card__image" alt="product">'; 
+
+    let img = createElement(innerHtml);
     divCardTop.append(img);
 
-    let span = document.createElement('span');
-    span.classList.add('card__price');
+    let span = createElement('<span class="card__price"></span>');
     span.innerText = "€" + product.price.toFixed(2);
     divCardTop.append(span);
-
     divCard.append(divCardTop);
-
-    let divCardBody = document.createElement('div');
-    divCardBody.classList.add('card__body');
-
-    let divCardTitle = document.createElement('div');
-    divCardTitle.classList.add('card__title');
+  
+    let divCardBody = createElement('<div class="card__body"></div>'); 
+    let divCardTitle = createElement('<div class="card__title"></div>'); 
     divCardTitle.innerText = product.name;
-
     divCardBody.append(divCardTitle);
-
-    let button = document.createElement('button');
-    button.type = 'button';
-    button.classList.add('card__button');
-    button.innerHTML = '<img src="/assets/images/icons/plus-icon.svg" alt="icon">';
+    
+    innerHtml = '<button type="button" class="card__button">';
+    innerHtml += '<img src="/assets/images/icons/plus-icon.svg" alt="icon">';  
+    innerHtml += '</button>';
+    let button = createElement(innerHtml); 
     button.addEventListener('click', (event) =>
       divCard.dispatchEvent(eventProductAdd));
     divCardBody.append(button);
@@ -49,6 +40,7 @@ export default class ProductCard {
       detail: product.id,
       bubbles: true
     });
+    
     return divCard;
   }
 }

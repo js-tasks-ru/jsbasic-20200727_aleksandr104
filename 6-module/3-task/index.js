@@ -6,64 +6,52 @@ export default class Carousel {
 
     this.elem = this.render(slides);
 
-    initCarousel(this.elem);
+    this.initCarousel(this.elem);
   }
 
   render(slides) {
-    let divCarousel = document.createElement('div');
-    divCarousel.classList.add('carousel');
+    let divCarousel = createElement('<div class="carousel"></div>'); 
 
-    let divArrow = document.createElement('div');
-    divArrow.classList.add('carousel__arrow');
-    divArrow.classList.add('carousel__arrow_right');
-    let img = document.createElement('img');
-    img.setAttribute('src', '/assets/images/icons/angle-icon.svg');
-    img.setAttribute('alt', 'icon');
-    divArrow.append(img);
+    let innerHtml = '<div class="carousel__arrow carousel__arrow_right">';
+    innerHtml += '<img src="/assets/images/icons/angle-icon.svg" alt="icon">';
+    innerHtml += '</div>';
+    let divArrow = createElement(innerHtml); 
     divCarousel.append(divArrow);
 
-    divArrow = document.createElement('div');
-    divArrow.classList.add('carousel__arrow');
-    divArrow.classList.add('carousel__arrow_left');
-    img = document.createElement('img');
-    img.setAttribute('src', '/assets/images/icons/angle-left-icon.svg');
-    img.setAttribute('alt', 'icon');
-    divArrow.append(img);
+    innerHtml = '<div class="carousel__arrow carousel__arrow_left">';
+    innerHtml += '<img src="/assets/images/icons/angle-left-icon.svg" alt="icon">';
+    innerHtml += '</div>';
+    divArrow = createElement(innerHtml); 
     divCarousel.append(divArrow);
 
-    let divCarouselInner = document.createElement('div');
-    divCarouselInner.classList.add('carousel__inner');
-
+    let divCarouselInner = createElement('<div class="carousel__inner"></div>'); 
+    
     for (let i = 0; i < slides.length; i++) {
       let slide = slides[i];
-      let divCarouselSlide = document.createElement('div');
-      divCarouselSlide.classList.add('carousel__slide');
-      divCarouselSlide.setAttribute('data-id', slide.id);
+      innerHtml = '<div class="carousel__slide"';
+      innerHtml += `data-id="${slide.id}"</div>`; 
+      let divCarouselSlide = createElement(innerHtml);
 
-      let img = document.createElement('img');
-      let imgSource = `/assets/images/carousel/${slide.image}`;
-      img.classList.add('carousel__img');
-      img.setAttribute('src', imgSource);
-      img.setAttribute('alt', 'slide');
+      innerHtml = `<img src="/assets/images/carousel/${slide.image}"`;
+      innerHtml += 'class="carousel__img" alt="slide">'; 
+
+      let img = createElement(innerHtml);
       divCarouselSlide.append(img);
 
-      let divCarouselСaption = document.createElement('div');
-      divCarouselСaption.classList.add('carousel__caption');
-
-      let span = document.createElement('span');
-      span.classList.add('carousel__price');
+      let divCarouselСaption = createElement('<div class="carousel__caption"></div>'); 
+   
+      let span = createElement('<span class="carousel__price"></span>');
       span.innerText = "€" + slide.price.toFixed(2);
       divCarouselСaption.append(span);
 
-      let divCarouselTitle = document.createElement('div');
-      divCarouselTitle.classList.add('carousel__title');
+      let divCarouselTitle = createElement('<div class="carousel__title"></div>'); 
       divCarouselTitle.innerText = slide.name;
       divCarouselСaption.append(divCarouselTitle);
 
-      let button = document.createElement('button');
-      button.type = 'button';
-      button.classList.add('carousel__button');
-      button.innerHTML = '<img src="/assets/images/icons/plus-icon.svg" alt="icon">';
+      innerHtml = '<button type="button" class="carousel__button">';
+      innerHtml += '<img src="/assets/images/icons/plus-icon.svg" alt="icon">';
+      innerHtml += '</button>';
+      let button = createElement(innerHtml); 
       button.addEventListener('click', (event) =>
         divCarousel.dispatchEvent(eventProductAdd));
       divCarouselСaption.append(button);
@@ -80,49 +68,51 @@ export default class Carousel {
 
     return divCarousel;
   }
-}
 
-function initCarousel(document) {
-  let countCarousel = 0;
-  let slideOffsetCarousel = 0;
-
-  let carousel = document.querySelector('.carousel__inner');
-  let carouselLength = carousel.children.length;
-
-  let buttons = document.querySelectorAll('.carousel__arrow');
-  for (let button of buttons) {
-    button.addEventListener('click', function () {
-      let slide = document.querySelector('.carousel__slide');
-      let slideOffset = slide.offsetWidth;
-      let classButton = this.classList[1];
-
-      if (classButton == 'carousel__arrow_right') {
-        slideOffset = -slideOffset;
-      };
-
-      countCarousel = countCarousel + Math.sign(slideOffset);
-      slideOffsetCarousel = slideOffsetCarousel + slideOffset;
-      carousel.style.transform = `translateX(${slideOffsetCarousel}px)`;
-
-      displayArrow(document, countCarousel, carouselLength);
-    })
+  initCarousel(document) {
+    let carouselObject = this;
+    let countCarousel = 0;
+    let slideOffsetCarousel = 0;
+  
+    let carousel = document.querySelector('.carousel__inner');
+    let carouselLength = carousel.children.length;
+  
+    let buttons = document.querySelectorAll('.carousel__arrow');
+    for (let button of buttons) {
+      button.addEventListener('click', function () {
+        let slide = document.querySelector('.carousel__slide');
+        let slideOffset = slide.offsetWidth;
+        let classButton = this.classList[1];
+  
+        if (classButton == 'carousel__arrow_right') {
+          slideOffset = -slideOffset;
+        };
+  
+        countCarousel = countCarousel + Math.sign(slideOffset);
+        slideOffsetCarousel = slideOffsetCarousel + slideOffset;
+        carousel.style.transform = `translateX(${slideOffsetCarousel}px)`;
+  
+        carouselObject.displayArrow(document, countCarousel, carouselLength);
+      })
+    }
+    carouselObject.displayArrow(document, countCarousel, carouselLength);
   }
-  displayArrow(document, countCarousel, carouselLength);
-}
-
-function displayArrow(document, countCarousel, carouselLength) {
-  let buttons = document.querySelectorAll('.carousel__arrow');
-
-  for (let button of buttons) {
-    let classButton = button.classList[1];
-    button.style.display = '';
-
-    let isFirstSlide = countCarousel == 0 && classButton == 'carousel__arrow_left';
-    let isLastSlide = -countCarousel == carouselLength - 1
-      && classButton == 'carousel__arrow_right';
-
-    if (isFirstSlide || isLastSlide) {
-      button.style.display = 'none';
+  
+  displayArrow(document, countCarousel, carouselLength) {
+    let buttons = document.querySelectorAll('.carousel__arrow');
+  
+    for (let button of buttons) {
+      let classButton = button.classList[1];
+      button.style.display = '';
+  
+      let isFirstSlide = countCarousel == 0 && classButton == 'carousel__arrow_left';
+      let isLastSlide = -countCarousel == carouselLength - 1
+        && classButton == 'carousel__arrow_right';
+  
+      if (isFirstSlide || isLastSlide) {
+        button.style.display = 'none';
+      }
     }
   }
+
 }
