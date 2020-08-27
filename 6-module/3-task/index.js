@@ -91,10 +91,11 @@ export default class Carousel {
         countCarousel = countCarousel + Math.sign(slideOffset);
         slideOffsetCarousel = slideOffsetCarousel + slideOffset;
         carousel.style.transform = `translateX(${slideOffsetCarousel}px)`;
-  
+        
         carouselObject.displayArrow(document, countCarousel, carouselLength);
       })
     }
+    
     carouselObject.displayArrow(document, countCarousel, carouselLength);
   }
   
