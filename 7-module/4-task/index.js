@@ -3,6 +3,8 @@ import createElement from '../../assets/lib/create-element.js';
 export default class StepSlider {
   constructor({ steps, value = 0 }) {
     this.elem = this.render(steps, value);
+    this.thumb = this.elem.querySelector('.slider__thumb');
+    this.progress = this.elem.querySelector('.slider__progress');
   }
 
   render(steps, value) {
@@ -12,9 +14,9 @@ export default class StepSlider {
       this.setValueSlider(this.valueSlider, steps);
     });
 
-    let innerHtml = '<div class="slider__thumb" style="left: 0%;">';
-    innerHtml += '<span class="slider__value">0</span>';
-    innerHtml += '</div>';
+    let innerHtml = `<div class="slider__thumb" style="left: 0%;">
+                      <span class="slider__value">0</span>
+                    </div>`;
     let divSliderThumb = createElement(innerHtml);
     divSliderThumb.addEventListener('pointerdown', () => {
       document.onpointermove = () => {
@@ -47,12 +49,9 @@ export default class StepSlider {
   }
 
   sliderPointer(event, steps) {
-    let thumb = this.elem.querySelector('.slider__thumb');
-    let progress = this.elem.querySelector('.slider__progress');
-    let slider = document.querySelector('.slider');
-    thumb.ondragstart = () => false;
+    this.thumb.ondragstart = () => false;
 
-    let domRectSlider = slider.getBoundingClientRect();
+    let domRectSlider = this.elem.getBoundingClientRect();
     let widthSlider = domRectSlider.width;
     let leftSlider = domRectSlider.left;
     let coordsPointerX = event.pageX - leftSlider;
@@ -72,8 +71,8 @@ export default class StepSlider {
 
     if (event.type == 'pointermove') {
       this.elem.classList.add('slider_dragging');
-      thumb.style.left = `${leftPercents}%`;
-      progress.style.width = `${leftPercents}%`;
+      this.thumb.style.left = `${leftPercents}%`;
+      this.progress.style.width = `${leftPercents}%`;
     } else {
       this.elem.classList.remove('slider_dragging');
       let eventPointerChange = new CustomEvent('slider-change', {
@@ -89,7 +88,7 @@ export default class StepSlider {
   }
 
   getValueSlider(event, steps) {
-    let slider = document.querySelector('.slider');
+    let slider = this.elem;
     if (event.currentTarget == slider) {
       let domRectSlider = slider.getBoundingClientRect();
       let widthSlider = domRectSlider.width;
@@ -103,30 +102,29 @@ export default class StepSlider {
   }
 
   setValueSlider(valueSlider, steps) {
-    let divSliderValue = document.querySelector('.slider__value');
+    let slider = this.elem;
+
+    let divSliderValue = slider.querySelector('.slider__value');
     divSliderValue.innerText = valueSlider;
 
-    let ActiveStep = document.querySelector('.slider__step-active');
+    let activeStep = slider.querySelector('.slider__step-active');
     
-    ActiveStep.classList.remove('slider__step-active');
+    activeStep.classList.remove('slider__step-active');
 
-    let nodeSliderSteps = document.querySelector('.slider__steps');
+    let nodeSliderSteps = slider.querySelector('.slider__steps');
     let span = nodeSliderSteps.childNodes[valueSlider];
     span.classList.add('slider__step-active');
 
-    let thumb = document.querySelector('.slider__thumb');
-    let progress = document.querySelector('.slider__progress');
-
     let leftPercents = valueSlider * (100 / (steps - 1));
 
-    thumb.style.left = `${leftPercents}%`;
-    progress.style.width = `${leftPercents}%`;
+    this.thumb.style.left = `${leftPercents}%`;
+    this.progress.style.width = `${leftPercents}%`;
 
     let eventSliderChange = new CustomEvent('slider-change', {
       detail: valueSlider,
       bubbles: true
     })
 
-    this.elem.dispatchEvent(eventSliderChange);
+    slider.dispatchEvent(eventSliderChange);
   }
 }

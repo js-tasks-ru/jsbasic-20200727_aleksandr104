@@ -12,9 +12,9 @@ export default class RibbonMenu {
     let menuObject = this;
     let divRibbon = createElement('<div class="ribbon"></div>');
 
-    let innerHtml = '<button class="ribbon__arrow ribbon__arrow_left">';
-    innerHtml += '<img src="/assets/images/icons/angle-icon.svg" alt="icon">';
-    innerHtml += '</button>';
+    let innerHtml = `<button class="ribbon__arrow ribbon__arrow_left">
+                      <img src="/assets/images/icons/angle-icon.svg" alt="icon">
+                    </button>`;
     let button = createElement(innerHtml);
     button.addEventListener('click', () => {
       ribbonInner.scrollBy(-350, 0);
@@ -46,9 +46,9 @@ export default class RibbonMenu {
     }
     divRibbon.append(ribbonInner);
 
-    innerHtml = '<button class="ribbon__arrow ribbon__arrow_right ribbon__arrow_visible">';
-    innerHtml += '<img src="/assets/images/icons/angle-icon.svg" alt="icon">';
-    innerHtml += '</button>';
+    innerHtml = `<button class="ribbon__arrow ribbon__arrow_right ribbon__arrow_visible">
+                  <img src="/assets/images/icons/angle-icon.svg" alt="icon">
+                </button>`;
     button = createElement(innerHtml);
     button.addEventListener('click', () => {
       ribbonInner.scrollBy(350, 0);
