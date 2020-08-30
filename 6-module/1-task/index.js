@@ -61,7 +61,7 @@ export default class UserTable {
   }
 
   onclick(event) {
-    let tr = event.target.parentElement.parentElement;
+    let tr = event.target.closest('tr');
     tr.remove();
   }
 }
