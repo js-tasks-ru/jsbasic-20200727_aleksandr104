@@ -54,7 +54,7 @@ export default class Carousel {
       let button = createElement(innerHtml); 
       divCarouselСaption.append(button);
       
-      button.addEventListener('click', (event) =>
+      button.addEventListener('click', () =>
       divCarousel.dispatchEvent(eventProductAdd));
 
       divCarouselSlide.append(divCarouselСaption);
