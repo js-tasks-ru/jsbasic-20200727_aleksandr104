@@ -207,7 +207,7 @@ export default class Cart {
       body: formData
     });
 
-    let result = await response.json();
+    let result = await response;
 
     if (response.status == 200) {
       this.cartItems = [];
