@@ -26,13 +26,14 @@ export default class ProductCard {
     divCardTitle.innerText = product.name;
     divCardBody.append(divCardTitle);
     
-    innerHtml = '<button type="button" class="card__button">';
-    innerHtml += '<img src="/assets/images/icons/plus-icon.svg" alt="icon">';  
-    innerHtml += '</button>';
+    innerHtml = `<button type="button" class="card__button">
+    <img src="/assets/images/icons/plus-icon.svg" alt="icon">  
+    </button>`;  
     let button = createElement(innerHtml); 
-    button.addEventListener('click', (event) =>
-      divCard.dispatchEvent(eventProductAdd));
     divCardBody.append(button);
+    
+    button.addEventListener('click', (event) =>
+    divCard.dispatchEvent(eventProductAdd));
 
     divCard.append(divCardBody);
 

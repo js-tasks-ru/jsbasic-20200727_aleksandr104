@@ -48,13 +48,14 @@ export default class Carousel {
       divCarouselTitle.innerText = slide.name;
       divCarouselСaption.append(divCarouselTitle);
 
-      innerHtml = '<button type="button" class="carousel__button">';
-      innerHtml += '<img src="/assets/images/icons/plus-icon.svg" alt="icon">';
-      innerHtml += '</button>';
+      innerHtml = `<button type="button" class="carousel__button">
+      <img src="/assets/images/icons/plus-icon.svg" alt="icon">
+      </button>`; 
       let button = createElement(innerHtml); 
-      button.addEventListener('click', (event) =>
-        divCarousel.dispatchEvent(eventProductAdd));
       divCarouselСaption.append(button);
+      
+      button.addEventListener('click', (event) =>
+      divCarousel.dispatchEvent(eventProductAdd));
 
       divCarouselSlide.append(divCarouselСaption);
       divCarouselInner.append(divCarouselSlide);
