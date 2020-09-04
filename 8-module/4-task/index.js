@@ -211,7 +211,7 @@ export default class Cart {
 
     if (response.status == 200) {
       this.cartItems = [];
-      this.modal.close();
+      this.cartIcon.update(this);
       this.modal.setTitle('Success!');
       let innerHTML = `<div class="modal__body-inner">
       <p>
@@ -222,7 +222,6 @@ export default class Cart {
       </div>`;
       let divModalBody = createElement(innerHTML);
       this.modal.setBody(divModalBody);
-      this.modal.open();
     }
   }
 

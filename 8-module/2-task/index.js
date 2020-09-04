@@ -5,53 +5,44 @@ export default class ProductGrid {
   constructor(products) {
     this.products = products;
     this.filters = {};
-    this.staticProducts = products;
 
     this.updateFilter(this.filters);
   }
 
   updateFilter(filters) {
     let listProducts = this.products;
-    let newListProducts = [];
-    let isEmptyFilters = true;
 
     for (let key in filters) {
+      this.filters[key] = filters[key];
+    }
+
+    for (let key in this.filters) {
       let nameFilter = key;
-      let valueFilter = filters[key];
-      let filterProducts = [];
+      let valueFilter = this.filters[key];
 
-      if (Boolean(valueFilter) == true && valueFilter !== 4) {
-        filterProducts = this.filterProducts(listProducts, nameFilter, valueFilter);
-        isEmptyFilters = false; 
-      } 
-
-      newListProducts = newListProducts.concat(filterProducts); 
-    }
-    
-    if (isEmptyFilters) {
-      listProducts = this.staticProducts;
-      newListProducts = listProducts;
-    }
+      if (Boolean(valueFilter) == true) { //&& valueFilter !== 4
+        listProducts = this.filterProducts(listProducts, nameFilter, valueFilter);
+      }
+    } 
 
     let divProductGrid = document.querySelector('.products-grid');
 
     if (divProductGrid == null) {
-      divProductGrid = createElement('<div class="products-grid"></div>'); 
-    }
+      divProductGrid = createElement('<div class="products-grid"></div>');
+    };
+    divProductGrid.innerHTML = '';
 
-    let innerHTML = '';
-    for (let i = 0; i < newListProducts.length; i++) {
-      let product = newListProducts[i];
+    let innerHTML = '<div class="products-grid__inner"></div>';
+    let divProductGridInner = createElement(innerHTML);
+
+    for (let i = 0; i < listProducts.length; i++) {
+      let product = listProducts[i];
       let productCard = new ProductCard(product);
-      innerHTML = innerHTML + productCard.elem.outerHTML;
+      divProductGridInner.append(productCard.elem);
     }
-    innerHTML = `<div class="products-grid__inner">
-                  ${innerHTML}
-                </div>`;
     
-    divProductGrid.innerHTML = innerHTML;            
+    divProductGrid.append(divProductGridInner);            
 
-    this.products = newListProducts;
     this.elem = divProductGrid;
   }
 

@@ -70,7 +70,6 @@ export default class Carousel {
   }
 
   initCarousel(document) {
-    let carouselObject = this;
     let countCarousel = 0;
     let slideOffsetCarousel = 0;
   
@@ -79,10 +78,10 @@ export default class Carousel {
   
     let buttons = document.querySelectorAll('.carousel__arrow');
     for (let button of buttons) {
-      button.addEventListener('click', function () {
+      button.addEventListener('click', () => {
         let slide = document.querySelector('.carousel__slide');
         let slideOffset = slide.offsetWidth;
-        let classButton = this.classList[1];
+        let classButton = button.classList[1];
   
         if (classButton == 'carousel__arrow_right') {
           slideOffset = -slideOffset;
@@ -92,11 +91,11 @@ export default class Carousel {
         slideOffsetCarousel = slideOffsetCarousel + slideOffset;
         carousel.style.transform = `translateX(${slideOffsetCarousel}px)`;
         
-        carouselObject.displayArrow(document, countCarousel, carouselLength);
+        this.displayArrow(document, countCarousel, carouselLength);
       })
     }
     
-    carouselObject.displayArrow(document, countCarousel, carouselLength);
+    this.displayArrow(document, countCarousel, carouselLength);
   }
   
   displayArrow(document, countCarousel, carouselLength) {

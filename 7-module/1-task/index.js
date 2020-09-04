@@ -5,7 +5,8 @@ export default class RibbonMenu {
     this.categories = categories;
 
     this.elem = this.render(categories);
-
+    
+    this.value = '';
   }
  
   render(categories) { 
@@ -55,8 +56,6 @@ export default class RibbonMenu {
     })
     divRibbon.append(button);
 
-
-
     return divRibbon;
   }
 
@@ -87,5 +86,7 @@ export default class RibbonMenu {
       ribbonItemActive.classList.remove('ribbon__item_active');
     };
     ribbonItem.classList.add('ribbon__item_active');
+    
+    this.value = ribbonItem.dataset.id;
   }
 }

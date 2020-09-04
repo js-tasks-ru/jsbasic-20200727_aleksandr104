@@ -7,7 +7,8 @@ export default class Modal {
 
   close() {
     document.body.classList.remove('is-modal-open');
-    document.body.innerHTML = '';
+    this.elem.remove();
+    //document.body.innerHTML = '';
     document.body.removeEventListener('keydown', () => {
       if (event.code == 'Escape') {
         this.close()
@@ -41,7 +42,8 @@ export default class Modal {
     return modal;
   }
   open() {
-    document.body.innerHTML = this.elem.outerHTML;
+    document.body.append(this.elem),
+    //document.body.innerHTML = this.elem.outerHTML;
     document.body.classList.add('is-modal-open');
 
     let button = document.querySelector('.modal__close');

@@ -53,16 +53,26 @@ export default class CartIcon {
     let containerWidth = container.offsetWidth;
     let containerLeft = container.offsetLeft;
 
-    if (!iconHidden && clientWidth > 767 && clientScrollTop > 0) {
-      iconCart.style.position = 'fixed';
-      iconCart.style.top = '50px';
+    if (!iconHidden && clientWidth > 767) {
+      if (clientScrollTop == 0) {
+        iconCart.style.position = 'absolute';
+        //iconCart.style.top = '50px';
+        iconCart.style.left = '';
+      } else {               //(clientScrollTop > 0)
+        iconCart.style.position = 'fixed';
+        iconCart.style.top = '50px';
 
-      let widthContainerPlusIcon = containerLeft + containerWidth + iconOffsetWidth;
-      
-      if (widthContainerPlusIcon + 30 <= clientWidth) {
-        iconCart.style.left = containerLeft + containerWidth + 20 + 'px';
-      } else {
-        iconCart.style.left = clientWidth - iconOffsetWidth - 10 + 'px';
+        let widthContainerPlusIcon = containerLeft + containerWidth + iconOffsetWidth;
+
+        if (widthContainerPlusIcon + 30 <= clientWidth) {
+          iconCart.style.left = containerLeft + containerWidth + 20 + 'px';
+        } else {
+          iconCart.style.left = clientWidth - iconOffsetWidth - 10 + 'px';
+        }
+      //} else if (clientScrollTop == 0) {
+        //iconCart.style.position = 'absolute';
+        //iconCart.style.top = '50px';
+        //iconCart.style.left = '';
       }
     }
   }
