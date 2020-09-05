@@ -26,15 +26,17 @@ export default class ProductCard {
     divCardTitle.innerText = product.name;
     divCardBody.append(divCardTitle);
     
-    innerHtml = '<button type="button" class="card__button">';
-    innerHtml += '<img src="/assets/images/icons/plus-icon.svg" alt="icon">';  
-    innerHtml += '</button>';
-    let button = createElement(innerHtml); 
-    button.addEventListener('click', (event) =>
-      divCard.dispatchEvent(eventProductAdd));
-    divCardBody.append(button);
+    innerHtml = `<button type="button" class="card__button">
+    <img src="/assets/images/icons/plus-icon.svg" alt="icon">  
+    </button>`;  
+    let divButton = createElement(innerHtml); 
+    divCardBody.append(divButton);
 
     divCard.append(divCardBody);
+
+    let button = divCard.querySelector('.card__button');
+    button.addEventListener('click', (event) =>
+    divCard.dispatchEvent(eventProductAdd));
 
     let eventProductAdd = new CustomEvent("product-add", {
       detail: product.id,

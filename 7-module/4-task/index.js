@@ -5,13 +5,14 @@ export default class StepSlider {
     this.elem = this.render(steps, value);
     this.thumb = this.elem.querySelector('.slider__thumb');
     this.progress = this.elem.querySelector('.slider__progress');
+    this.setValueSlider(steps, value);
   }
 
   render(steps, value) {
     let divSlider = createElement('<div class="slider"></div>');
     divSlider.addEventListener('click', () => {
       this.valueSlider = this.getValueSlider(event, steps);
-      this.setValueSlider(this.valueSlider, steps);
+      this.setValueSlider(steps, this.valueSlider);
     });
 
     let innerHtml = `<div class="slider__thumb" style="left: 0%;">
@@ -24,7 +25,7 @@ export default class StepSlider {
       };
       document.onpointerup = () => {
         this.valueSlider = this.sliderPointer(event, steps);
-        this.setValueSlider(this.valueSlider, steps);
+        this.setValueSlider(steps, this.valueSlider);
         document.onpointerup = null;
         document.onpointermove = null;
       };
@@ -101,14 +102,13 @@ export default class StepSlider {
     }
   }
 
-  setValueSlider(valueSlider, steps) {
+  setValueSlider(steps, valueSlider) {
     let slider = this.elem;
 
     let divSliderValue = slider.querySelector('.slider__value');
     divSliderValue.innerText = valueSlider;
 
     let activeStep = slider.querySelector('.slider__step-active');
-    
     activeStep.classList.remove('slider__step-active');
 
     let nodeSliderSteps = slider.querySelector('.slider__steps');
@@ -125,6 +125,8 @@ export default class StepSlider {
       bubbles: true
     })
 
+    this.value = valueSlider;
+    
     slider.dispatchEvent(eventSliderChange);
   }
 }

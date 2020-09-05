@@ -48,16 +48,18 @@ export default class Carousel {
       divCarouselTitle.innerText = slide.name;
       divCarouselСaption.append(divCarouselTitle);
 
-      innerHtml = '<button type="button" class="carousel__button">';
-      innerHtml += '<img src="/assets/images/icons/plus-icon.svg" alt="icon">';
-      innerHtml += '</button>';
-      let button = createElement(innerHtml); 
-      button.addEventListener('click', (event) =>
-        divCarousel.dispatchEvent(eventProductAdd));
-      divCarouselСaption.append(button);
+      innerHtml = `<button type="button" class="carousel__button">
+      <img src="/assets/images/icons/plus-icon.svg" alt="icon">
+      </button>`; 
+      let divButton = createElement(innerHtml); 
+      divCarouselСaption.append(divButton);
 
       divCarouselSlide.append(divCarouselСaption);
       divCarouselInner.append(divCarouselSlide);
+
+      let button = divCarouselInner.querySelector('.carousel__button');
+      button.addEventListener('click', (event) =>
+      divCarousel.dispatchEvent(eventProductAdd));
 
       let eventProductAdd = new CustomEvent("product-add", {
         detail: slide.id,
@@ -70,7 +72,6 @@ export default class Carousel {
   }
 
   initCarousel(document) {
-    let carouselObject = this;
     let countCarousel = 0;
     let slideOffsetCarousel = 0;
   
@@ -79,10 +80,10 @@ export default class Carousel {
   
     let buttons = document.querySelectorAll('.carousel__arrow');
     for (let button of buttons) {
-      button.addEventListener('click', function () {
+      button.addEventListener('click', () => {
         let slide = document.querySelector('.carousel__slide');
         let slideOffset = slide.offsetWidth;
-        let classButton = this.classList[1];
+        let classButton = button.classList[1];
   
         if (classButton == 'carousel__arrow_right') {
           slideOffset = -slideOffset;
@@ -92,11 +93,11 @@ export default class Carousel {
         slideOffsetCarousel = slideOffsetCarousel + slideOffset;
         carousel.style.transform = `translateX(${slideOffsetCarousel}px)`;
         
-        carouselObject.displayArrow(document, countCarousel, carouselLength);
+        this.displayArrow(document, countCarousel, carouselLength);
       })
     }
     
-    carouselObject.displayArrow(document, countCarousel, carouselLength);
+    this.displayArrow(document, countCarousel, carouselLength);
   }
   
   displayArrow(document, countCarousel, carouselLength) {

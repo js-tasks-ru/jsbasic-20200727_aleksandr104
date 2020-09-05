@@ -5,6 +5,8 @@ export default class CartIcon {
     this.render();
 
     this.addEventListeners();
+
+    this.container = document.querySelector('.container');
   }
 
   render() {
@@ -26,7 +28,7 @@ export default class CartIcon {
       this.elem.classList.add('shake');
       this.elem.addEventListener('transitionend', () => {
         this.elem.classList.remove('shake');
-      }, {once: true});
+      }, { once: true });
 
     } else {
       this.elem.classList.remove('cart-icon_visible');
@@ -39,6 +41,39 @@ export default class CartIcon {
   }
 
   updatePosition() {
-    // ваш код ...
+    let iconCart = this.elem;
+    let container = this.container;
+
+    let iconOffsetWidth = iconCart.offsetWidth;
+    let iconOffsetHeight = iconCart.offsetHeight;
+    let iconHidden = !iconOffsetWidth && !iconOffsetHeight;
+    let clientWidth = document.documentElement.clientWidth;
+    let clientScrollTop = document.documentElement.scrollTop;
+
+    let containerWidth = container.offsetWidth;
+    let containerLeft = container.offsetLeft;
+
+    if (!iconHidden && clientWidth > 767) {
+      if (clientScrollTop == 0) {
+        iconCart.style.position = 'absolute';
+        //iconCart.style.top = '50px';
+        iconCart.style.left = '';
+      } else {               //(clientScrollTop > 0)
+        iconCart.style.position = 'fixed';
+        iconCart.style.top = '50px';
+
+        let widthContainerPlusIcon = containerLeft + containerWidth + iconOffsetWidth;
+
+        if (widthContainerPlusIcon + 30 <= clientWidth) {
+          iconCart.style.left = containerLeft + containerWidth + 20 + 'px';
+        } else {
+          iconCart.style.left = clientWidth - iconOffsetWidth - 10 + 'px';
+        }
+      //} else if (clientScrollTop == 0) {
+        //iconCart.style.position = 'absolute';
+        //iconCart.style.top = '50px';
+        //iconCart.style.left = '';
+      }
+    }
   }
 }
